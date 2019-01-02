@@ -1,0 +1,5 @@
+---
+ - hosts: "{{ENV}}"
+   #gather_facts: yes
+   roles:
+   - deploy

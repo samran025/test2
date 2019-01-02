@@ -1,0 +1,24 @@
+---
+
+ - name: stat get
+   stat:
+    path: "{{dest}}/apache-tomcat-7.0.92.tar.gz"
+   register: tomcatt
+
+ - name: getting tomcat
+   shell: "wget http://mirrors.estointernet.in/apache/tomcat/tomcat-7/v7.0.92/bin/apache-tomcat-7.0.92.tar.gz"
+   args:
+    chdir: "{{dest}}"
+   when: tomcatt.stat.exists == false
+ 
+ - name: untar
+   shell: "tar -xvzf apache-tomcat-7.0.92.tar.gz"
+   args:
+    chdir: "{{dest}}"
+   when: tomcatt.stat.exists == false
+
+
+ - name: getting war
+   shell: "wget https://updates.jenkins-ci.org/download/war/2.145/jenkins.war"
+   args:
+    chdir: "{{dest}}/apache-tomcat-7.0.92/webapps"

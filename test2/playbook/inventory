@@ -1,0 +1,5 @@
+[DEV]
+localhost  ansible_connection='local' 
+
+[IT]
+localhost22 ansible_host="localhost2"  ansible_connection='local'

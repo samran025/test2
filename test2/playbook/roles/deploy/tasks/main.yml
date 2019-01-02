@@ -1,0 +1,57 @@
+---
+ 
+ - lineinfile:
+    line: "sdmran is nice"
+    regex: ^samran*
+    insertafter: ^sumran*
+    path: "{{dest}}/ss.txt"
+    create: yes
+  
+ - name: copy module
+   copy: src="/root/r/ansible/ans/test2/playbook/sam.txt" dest="{{dest}}"
+ 
+ - set_fact:
+    var1: "simran"
+ 
+ - debug:
+    msg: "{{ var1 }}"
+
+ - name: check directory
+   stat:
+    path: /home/kali_bkp/root/ansible/ans/test2/playbook/ss/IT2
+   register: check_IT
+
+ - name: creates the direectory
+   file: path="{{dest}}" state=directory mode=750
+   when: check_IT.stat.exists == false
+
+ - name: check existing folder
+   stat: path="{{dest}}/dbt2-0.37.50.3"
+   register: check_backup
+
+ - name: create backup
+   shell: "rm -rf {{dest}}/dbt2-0.37.50.3.old;mv  {{dest}}/dbt2-0.37.50.3 {{dest}}/dbt2-0.37.50.3.old"
+   when: check_backup.stat.exists
+
+ - name: shell module
+   shell: "wget http://downloads.mysql.com/source/dbt2-0.37.50.3.tar.gz"
+   args:
+    chdir: "{{dest}}"
+   
+ - name: "shell var"
+   shell: "echo val"
+   register: val2
+
+ - name: "get var"
+   file:
+    path: "/root/r/ansible/ans/test2/playbook/ss/{{val2.stdout}}.txt"
+    state: touch
+   when: val2.rc == 0
+
+ - name: untar
+   shell: "tar -xvzf dbt2-0.37.50.3.tar.gz"
+   args:
+    chdir: "{{dest}}"
+
+ - file: path="{{dest}}/dbt2-0.37.50.3.tar.gz" state=absent
+
