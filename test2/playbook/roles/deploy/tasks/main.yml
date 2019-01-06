@@ -6,9 +6,7 @@
     insertafter: ^sumran*
     path: "{{dest}}/ss.txt"
     create: yes
-  
- - name: copy module
-   copy: src="/root/r/ansible/ans/test2/playbook/sam.txt" dest="{{dest}}"
+
  
  - set_fact:
     var1: "simran"
